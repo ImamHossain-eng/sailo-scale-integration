@@ -35,10 +35,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/vessels', function() { return view('admin.vessels.index'); })->name('vessels.index');
+        Route::get('/vessels/{vessel}/print', [AdminDashboardController::class, 'printVessel'])->name('vessels.print');
     });
 
     Route::prefix('operator')->name('operator.')->middleware('operator')->group(function () {
         Route::get('/dashboard', [OperatorDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/weighings/{weighing}/print', [OperatorDashboardController::class, 'print'])->name('weighings.print');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

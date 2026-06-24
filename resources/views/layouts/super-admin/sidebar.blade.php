@@ -20,6 +20,12 @@
                     <i class="bi bi-shield-check me-2"></i> Roles
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ request()->routeIs('admin.vessels.*') ? 'active' : '' }}" 
+                   href="{{ route('admin.vessels.index') }}">
+                    <i class="bi bi-ship me-2"></i> Vessel Billing
+                </a>
+            </li>
         </ul>
     </div>
 </div>
