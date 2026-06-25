@@ -9,7 +9,7 @@ use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('welcome');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -47,6 +47,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+
 
 require __DIR__ . '/auth.php';
+
+
+});
+
+
+    Route::post('/contact', function (\Illuminate\Http\Request $request) {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'subject' => 'required|string|max:255',
+                'message' => 'required|string|max:5000',
+            ]);
+
+            \App\Models\ContactMessage::create($validated);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Your message has been sent successfully!'
+            ]);
+    });
